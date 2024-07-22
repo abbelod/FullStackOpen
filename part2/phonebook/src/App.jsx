@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import PersonService from './services/persons'
 
+import Notification from './Notification'
+import Error from './Error.jsx'
 import Filter from './Filter'
 import Persons from './Persons'
 import PersonForm from './PersonForm'
@@ -13,6 +15,8 @@ const App = () => {
   const [newName, setNewName] = useState('firstName')
   const [newNumber, setNewNumber] = useState('')
   const [newSearch, setNewSearch] = useState('')
+  const [notification, setNotification] = useState('')
+  const [errorMessage,seterrorMessage] = useState('')
 
 
   useEffect(() => {
@@ -31,6 +35,8 @@ const App = () => {
     event.preventDefault();
     console.log('submit called')
 
+    console.log(persons)
+
     let newPerson = { name: newName, number: newNumber}
 
    let personIndex = persons.findIndex((person) => person.name.toLowerCase() === newName.toLowerCase())
@@ -41,6 +47,9 @@ const App = () => {
         PersonService.update(persons[personIndex].id, newPerson).then(response=>{
         PersonService.getAll().then(Persons=> setPersons(Persons))
 
+        }).catch(error=>{console.log('fail')
+          seterrorMessage(`Information for ${newName} is already removed from the server`)
+          setTimeout(()=>{seterrorMessage('')}, 3000)          
         })
       }
       setNewName('')
@@ -50,6 +59,9 @@ const App = () => {
       PersonService.create(newPerson).then(person=>{
         console.log(persons)
         setPersons(persons.concat(person))
+        setNotification(`Added ${newName}`)
+        setTimeout(()=> {setNotification('')}, 1000)
+
       })
 
       // axios.post('http://localhost:3001/persons', newPerson)
@@ -104,6 +116,8 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message = {notification}></Notification>
+      <Error message = {errorMessage}> </Error>
       <Filter func = {handleSearchChange}></Filter>
       <div>debug: {newName}</div>
       <PersonForm handleformChange = {handleformChange} handleNumberChange = {handleNumberChange} buttonSubmit = {buttonSubmit}></PersonForm>
