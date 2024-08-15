@@ -7,3 +7,87 @@ Content-Type: application/json
     "url": "www.keytoalie.com",
     "upvotes": "231"
 }
+
+
+
+
+###
+DELETE http://localhost:3003/api/blogs/5a422ba71b54a676234d17fb
+Content-Type: application/json
+
+
+###
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+    "username": "abbelod",
+    "name": "Talha",
+    "password": "fso101"
+}
+
+
+
+###
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+    "author": "Testing after User Setup",
+    "title": "Key to a Lie",
+    "url": "www.keytoalie.com",
+    "upvotes": "231",
+    "userId" : "66bb5e49170bbc22d0f60dff"
+}
+
+
+###
+POST http://localhost:3003/api/login
+Content-Type: application/json
+
+{
+    "username": "abbelod",
+    "password": "fso101"
+    
+}
+###
+POST http://localhost:3003/api/login
+Content-Type: application/json
+
+{
+    "username": "helloworld",
+    "password": "alter"
+    
+}
+
+###
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFiYmVsb2QiLCJpZCI6IjY2YmI1ZTQ5MTcwYmJjMjJkMGY2MGRmZiIsImlhdCI6MTcyMzY2MDA2OSwiZXhwIjoxNzIzNjYzNjY5fQ.u51TK0QhxiGguPwgE6jKnqHBGYWp8Vlgqa3rp8rYyrE
+
+{
+"author": "Testing 4.20 again",
+    "title": "Testing 4.20",
+    "url": "www.keytoalie.com",
+    "upvotes": "231",
+    "userId" : "66bb5e49170bbc22d0f60dff"
+}
+
+
+
+###
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+    "username": "helloworld",
+    "name": "Talha",
+    "password": "alter"
+}
+
+
+
+###
+DELETE http://localhost:3003/api/blogs/66bcf7a24f5f7cd0ae9ad9d9
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImhlbGxvd29ybGQiLCJpZCI6IjY2YmNmOWZjNThkNzhjNWVjZGZjMWM4MyIsImlhdCI6MTcyMzcwMzc0NSwiZXhwIjoxNzIzNzA3MzQ1fQ.tIjZtfxKx-i-D48n6pqwWheysIWzMNhp571GfkjHgbA
