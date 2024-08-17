@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
 import PersonService from './services/persons'
 
 import Notification from './Notification'
@@ -48,8 +47,17 @@ const App = () => {
         PersonService.getAll().then(Persons=> setPersons(Persons))
 
         }).catch(error=>{console.log('fail')
-          seterrorMessage(`Information for ${newName} is already removed from the server`)
-          setTimeout(()=>{seterrorMessage('')}, 3000)          
+          console.log(error)
+          if(error.response.status== 422){
+            seterrorMessage(error.response.data.error)
+            setTimeout(()=>{seterrorMessage('')}, 3000)          
+
+          }
+          else{
+            
+            seterrorMessage(`Information for ${newName} is already removed from the server`)
+            setTimeout(()=>{seterrorMessage('')}, 3000)          
+          }
         })
       }
       setNewName('')
@@ -60,7 +68,13 @@ const App = () => {
         console.log(persons)
         setPersons(persons.concat(person))
         setNotification(`Added ${newName}`)
-        setTimeout(()=> {setNotification('')}, 1000)
+        setTimeout(()=> {setNotification('')}, 3000)
+
+      })
+      .catch(error=>{
+        console.log(error.response.data)
+        seterrorMessage(error.response.data.error)
+        setTimeout(()=> {seterrorMessage('')}, 3000)
 
       })
 

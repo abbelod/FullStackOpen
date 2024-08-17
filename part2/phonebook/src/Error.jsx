@@ -9,7 +9,7 @@ const Notification = ({message})=>{
         fontStyle: 'bold',
         fontSize: '20px',
         background: 'lightgrey',
-        borderStyle: 'solic',
+        borderStyle: 'solid',
         borderRadius: '5px',
         padding: '10px',
         marginBottom: '10px'
