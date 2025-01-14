@@ -2,13 +2,8 @@ import { useState } from 'react'
 import blogService from '../services/blogs'
 const Blog = ({blog, updateBlog, username, deleteBlog}) => {
 
-  // console.log(blog)
 console.log('username', username)
-// if(blog.user){
-  
-//   console.log('blog author: ', blog.user.username)
-// }
-// console.log('blog is',blog)
+
 
 
   const blogStyle = {
