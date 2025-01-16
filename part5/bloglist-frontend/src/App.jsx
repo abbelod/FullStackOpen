@@ -17,21 +17,25 @@ const App = () => {
 
 
 
-  const loginUser = async ({ username, password}) => {
+  const loginUser = async ({ username, password }) => {
 
     try {
       const user = await loginService.login({
         username, password
       })
+
       window.localStorage.setItem('loggedInUser', JSON.stringify(user))
       setUser(user)
       blogService.setToken(user.token)
       console.log(user)
 
     } catch (exception) {
-      console.log('wrong credentials')
+      setErrorMessage(`wrong credentials`)
+      setTimeout(() => {
+        setErrorMessage('')
+      }, 5000)
+      console.log(exception)
     }
-    console.log('logging in with ', username, password)
   }
 
   const logOut = () => {
@@ -52,22 +56,22 @@ const App = () => {
   }, [])
 
 
-  
-  
 
-  const sortAndSet = (blogs)=>{
-    blogs.sort((a,b)=>{
-        if(a.likes> b.likes){
-          return -1
-        } else{
-          return 1
-        }
+
+
+  const sortAndSet = (blogs) => {
+    blogs.sort((a, b) => {
+      if (a.likes > b.likes) {
+        return -1
+      } else {
+        return 1
+      }
     })
     setBlogs(blogs)
   }
 
 
-  useEffect( ()=> {
+  useEffect(() => {
 
     // const getBlogs = async ()=>{
     //   const retVal =  await blogService.getAll()
@@ -83,13 +87,13 @@ const App = () => {
     )
   }, [])
 
-  const deleteBlog = async(blog)=>{
+  const deleteBlog = async (blog) => {
 
-    if(window.confirm(`Do you really want to delete ${ blog.title } by ${ blog.author }?`)){
-      try{
+    if (window.confirm(`Do you really want to delete ${blog.title} by ${blog.author}?`)) {
+      try {
         const response = await blogService.deleteBlog(blog.id)
         console.log(response)
-        setNotification(`Blog Titled: ${ blog.title } Deleted`)
+        setNotification(`Blog Titled: ${blog.title} Deleted`)
         setTimeout(() => {
           setNotification('')
         }, 5000)
@@ -97,24 +101,24 @@ const App = () => {
         blogService.getAll().then(blogs => {
           sortAndSet(blogs)
         })
-      } catch(exception){
-  
+      } catch (exception) {
+
         setErrorMessage('Error Deleting Blog')
         setTimeout(() => {
           setErrorMessage('')
         }, 5000)
-      
+
       }
 
     }
   }
 
   const updateBlog = async (blog) => {
-    try{
+    try {
 
       const newBlog = {
         user: blog.user.id,
-        likes: blog.likes+1,
+        likes: blog.likes + 1,
         author: blog.author,
         title: blog.title,
         url: blog.url
@@ -124,9 +128,9 @@ const App = () => {
       blogService.getAll().then(blogs => {
         sortAndSet(blogs)
       })
-      
-      
-    } catch(exception){
+
+
+    } catch (exception) {
       setErrorMessage('Error Adding Updating a Blog')
       setTimeout(() => {
         setErrorMessage('')
@@ -134,7 +138,7 @@ const App = () => {
     }
   }
 
-  
+
 
   const addBlog = async (blog) => {
 
@@ -143,9 +147,9 @@ const App = () => {
       const response = await blogService.create(blog)
       console.log(response)
       blogService.getAll().then(blogs => {
-          sortAndSet(blogs)
+        sortAndSet(blogs)
       })
-      setNotification(`a new blog ${ blog.title } by  ${ blog.author } added`)
+      setNotification(`a new blog ${blog.title} by  ${blog.author} added`)
       setTimeout(() => {
         setNotification('')
       }, 5000)
@@ -164,9 +168,11 @@ const App = () => {
 
       <div>
         <h2>Log in to application</h2>
+        {errorMessage}
+      {notification}
         <Togglable buttonLabel='login'>
           <LoginForm
-            loginUser={ loginUser }
+            loginUser={loginUser}
           ></LoginForm>
 
         </Togglable>
@@ -177,20 +183,20 @@ const App = () => {
   return (
     <div>
       <h2>blogs</h2>
-      { errorMessage }
-      { notification }
+      {errorMessage}
+      {notification}
 
       <div>
-        <p>{ user.name } logged in
-          <button onClick={ logOut }>logout</button>
+        <p>{user.name} logged in
+          <button onClick={logOut}>logout</button>
         </p>
       </div>
 
-      <Togglable buttonLabel='create new blog' ref={ blogFormRef }>
+      <Togglable buttonLabel='create new blog' ref={blogFormRef}>
 
         <BlogForm
 
-          addBlog={ addBlog }
+          addBlog={addBlog}
 
         ></BlogForm>
 
@@ -198,7 +204,7 @@ const App = () => {
 
       <Togglable buttonLabel='show blogs'>
         {blogs.map(blog => {
-          return <Blog  key={ blog.id } blog={ blog } updateBlog = { updateBlog } deleteBlog= { deleteBlog } username={ user.username }></Blog>
+          return <Blog key={blog.id} blog={blog} updateBlog={updateBlog} deleteBlog={deleteBlog} username={user.username}></Blog>
         }
         )}
 

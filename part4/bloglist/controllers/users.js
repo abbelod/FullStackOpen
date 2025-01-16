@@ -3,6 +3,8 @@ const usersRouter = require('express').Router()
 const User = require('../models/user')
 
 usersRouter.post('/', async (request, response)=>{
+
+    console.log('post for creating user called')
     const {username, name, password} = request.body
 
     if(!username || username.length < 3 || !password || password.length < 3){

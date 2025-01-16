@@ -30,13 +30,13 @@ return (
 
     <form onSubmit={blogFormSubmit}>
         title
-        <input type="text" value={title} onChange={({target})=> setTitle(target.value)} />
+        <input data-testid = 'title' type="text" value={title} onChange={({target})=> setTitle(target.value)} />
         <br />
         author
-        <input type="text" value={author} onChange={({target})=> setAuthor(target.value)} />
+        <input data-testid = 'author' type="text" value={author} onChange={({target})=> setAuthor(target.value)} />
         <br />
         url
-        <input type="text" value={url} onChange={({target})=> setUrl(target.value)}/>
+        <input data-testid = 'url' type="text" value={url} onChange={({target})=> setUrl(target.value)}/>
 
         <br />
         <button type='Submit'>create</button>

@@ -80,9 +80,9 @@ POST http://localhost:3003/api/users
 Content-Type: application/json
 
 {
-    "username": "helloworld",
-    "name": "Talha",
-    "password": "alter"
+    "username": "abbelod2",
+    "name": "username abbelod2",
+    "password": "fso101"
 }
 
 
